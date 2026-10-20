@@ -1,0 +1,5 @@
+// Shared defaults. Keep signing identities and personal URLs in the ignored override.
+SIDEMON_BUNDLE_ID = org.example.sidemon
+SIDEMON_DEFAULT_RELAY_URL =
+SIDEMON_DASHBOARD_URL =
+#include? "../Config.local.xcconfig"

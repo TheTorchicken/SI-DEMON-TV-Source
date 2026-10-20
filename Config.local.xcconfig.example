@@ -1,0 +1,6 @@
+// Copy to Config.local.xcconfig and use your Apple development team/bundle ID.
+DEVELOPMENT_TEAM = YOUR_TEAM_ID
+SIDEMON_BUNDLE_ID = com.yourname.sidemon
+// $() keeps // from becoming an xcconfig comment. Neither URL may contain a key.
+SIDEMON_DEFAULT_RELAY_URL = https:/$()/relay.example.com
+SIDEMON_DASHBOARD_URL = https:/$()/dashboard.example.com

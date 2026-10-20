@@ -1,0 +1,83 @@
+name: SIDemonTV
+options:
+  deploymentTarget:
+    iOS: "16.0"
+configFiles:
+  Debug: ../apple/Config.xcconfig
+  Release: ../apple/Config.xcconfig
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    TARGETED_DEVICE_FAMILY: "1,2"
+    CODE_SIGN_STYLE: Automatic
+    MARKETING_VERSION: "1.0.0"
+    CURRENT_PROJECT_VERSION: 2
+targets:
+  SIDemonTV:
+    type: application
+    platform: iOS
+    sources: [App, Shared, ../apple/Data+Packet.swift]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: $(SIDEMON_BUNDLE_ID)
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+    info:
+      path: App/Info.plist
+      properties:
+        CFBundleDisplayName: SI-DEMON-TV
+        UILaunchScreen: {}
+        UISupportedInterfaceOrientations:
+          [
+            UIInterfaceOrientationPortrait,
+            UIInterfaceOrientationLandscapeLeft,
+            UIInterfaceOrientationLandscapeRight,
+            UIInterfaceOrientationPortraitUpsideDown,
+          ]
+        NSLocalNetworkUsageDescription: Connect to your private SI-DEMON-TV relay for screen and audio sharing.
+        DemonKeychainGroup: $(AppIdentifierPrefix)$(SIDEMON_BUNDLE_ID)
+        DemonDefaultRelayURL: $(SIDEMON_DEFAULT_RELAY_URL)
+        NSAppTransportSecurity:
+          NSAllowsLocalNetworking: true
+        CFBundleURLTypes:
+          - CFBundleURLName: $(SIDEMON_BUNDLE_ID)
+            CFBundleURLSchemes: [sidemon]
+    entitlements:
+      path: App/SIDemonTV.entitlements
+      properties:
+        keychain-access-groups: [$(AppIdentifierPrefix)$(SIDEMON_BUNDLE_ID)]
+    dependencies:
+      - target: Broadcast
+  Broadcast:
+    type: app-extension
+    platform: iOS
+    sources:
+      [
+        Broadcast,
+        Shared,
+        ../apple/Data+Packet.swift,
+        ../apple/VideoEncoder.swift,
+      ]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: $(SIDEMON_BUNDLE_ID).broadcast
+        APPLICATION_EXTENSION_API_ONLY: YES
+    info:
+      path: Broadcast/Info.plist
+      properties:
+        CFBundleDisplayName: SI-DEMON-TV Broadcast
+        DemonKeychainGroup: $(AppIdentifierPrefix)$(SIDEMON_BUNDLE_ID)
+        NSAppTransportSecurity:
+          NSAllowsLocalNetworking: true
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.broadcast-services-upload
+          NSExtensionPrincipalClass: $(PRODUCT_MODULE_NAME).SampleHandler
+          RPBroadcastProcessMode: RPBroadcastProcessModeSampleBuffer
+    entitlements:
+      path: Broadcast/Broadcast.entitlements
+      properties:
+        keychain-access-groups: [$(AppIdentifierPrefix)$(SIDEMON_BUNDLE_ID)]
+schemes:
+  SIDemonTV:
+    build:
+      targets:
+        SIDemonTV: all

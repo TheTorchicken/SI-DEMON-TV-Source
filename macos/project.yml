@@ -1,0 +1,60 @@
+name: SIDemonMac
+options:
+  deploymentTarget:
+    macOS: "14.0"
+configFiles:
+  Debug: ../apple/Config.xcconfig
+  Release: ../apple/Config.xcconfig
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    CODE_SIGN_STYLE: Automatic
+    MARKETING_VERSION: "1.0.0"
+    CURRENT_PROJECT_VERSION: 2
+targets:
+  SIDemonMac:
+    type: application
+    platform: macOS
+    sources:
+      - App
+      - Core
+      - ../apple/VideoEncoder.swift
+      - ../apple/Data+Packet.swift
+      - path: Assets
+        buildPhase: resources
+    settings:
+      base:
+        PRODUCT_NAME: SI-DEMON-TV Mac
+        PRODUCT_BUNDLE_IDENTIFIER: $(SIDEMON_BUNDLE_ID).mac
+        ENABLE_HARDENED_RUNTIME: YES
+        COMBINE_HIDPI_IMAGES: YES
+    info:
+      path: App/Info.plist
+      properties:
+        CFBundleDisplayName: SI-DEMON-TV Mac
+        LSApplicationCategoryType: public.app-category.entertainment
+        NSPrincipalClass: NSApplication
+        CFBundleIconFile: DemonTesla
+        DemonDefaultRelayURL: $(SIDEMON_DEFAULT_RELAY_URL)
+        DemonDashboardURL: $(SIDEMON_DASHBOARD_URL)
+        NSScreenCaptureUsageDescription: Share the screen or window you choose, with system audio, to your SI-DEMON-TV relay.
+  SIDemonMacTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - Tests
+      - Core
+      - App/MirrorSender.swift
+      - ../apple/VideoEncoder.swift
+      - ../apple/Data+Packet.swift
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        PRODUCT_BUNDLE_IDENTIFIER: $(SIDEMON_BUNDLE_ID).mac.tests
+schemes:
+  SIDemonMac:
+    build:
+      targets:
+        SIDemonMac: all
+    test:
+      targets: [SIDemonMacTests]

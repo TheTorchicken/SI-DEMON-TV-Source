@@ -1,0 +1,20 @@
+{
+  "name": "SI-DEMON-TV",
+  "short_name": "SI-DEMON-TV",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#0e0f12",
+  "theme_color": "#0e0f12",
+  "icons": [
+    {
+      "src": "./demon-tesla-icon-v1-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "./demon-tesla-icon-v1-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

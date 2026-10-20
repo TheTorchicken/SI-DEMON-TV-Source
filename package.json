@@ -1,0 +1,48 @@
+{
+  "name": "si-demon-tv",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Self-hosted Tesla entertainment dashboard with YouTube phone controls and Apple screen mirroring.",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "server": "node --env-file-if-exists=.env --import tsx server/index.ts",
+    "start": "node --env-file-if-exists=.env --import tsx server/index.ts",
+    "build": "tsc --noEmit && vite build",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "ios:generate": "cd ios && xcodegen generate",
+    "doctor": "tsx scripts/doctor.ts",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "macos:generate": "cd macos && xcodegen generate",
+    "macos:build": "cd macos && zsh build.sh"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "qrcode": "^1.5.4",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "ws": "^8.18.0",
+    "yt-cast-receiver": "git+https://github.com/patrickkfkan/yt-cast-receiver.git#83d61fa169e33c5e0046c2440b99a17cd9493e73"
+  },
+  "overrides": {
+    "uuid": "^11.1.1",
+    "decode-uri-component": "0.5.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.0.0",
+    "@types/qrcode": "^1.5.5",
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.0",
+    "@types/ws": "^8.18.0",
+    "@vitejs/plugin-react": "6.1.2",
+    "prettier": "3.9.10",
+    "tsx": "^4.20.0",
+    "typescript": "^5.8.0",
+    "vite": "8.3.4",
+    "vitest": "5.0.4"
+  },
+  "license": "PolyForm-Noncommercial-1.0.0"
+}
